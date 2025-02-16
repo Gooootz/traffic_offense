@@ -128,7 +128,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
             _p.prepend('<div class="d-flex mb-3 w-100 align-items-center justify-content-center">' +
                 '<img class="mx-4" src="<?php echo validate_image($_settings->info('logo')) ?>" width="50px" height="50px"/>' +
                 '<div class="px-2">' +
-                '<h3 class="text-center"><?php echo $_settings->info('name') ?></h3>          '+
+                '<h3 class="text-center"><?php echo $_settings->info('name') ?></h3>           '+
                 '<h3 class="text-center">Driver\'s Information and Traffic Offense Records</h3>' +
                 '</div>' +
                 '</div><hr/>');
