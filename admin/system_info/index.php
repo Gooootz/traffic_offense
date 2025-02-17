@@ -81,53 +81,59 @@
 
 	</div>
 </div>
+
 <script>
-	function displayImg(input, _this) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				$('#cimg').attr('src', e.target.result);
-				_this.siblings('.custom-file-label').html(input.files[0].name)
-			}
+    function displayImg(input, imgId, labelElement) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $(imgId).attr('src', e.target.result);
+                if (labelElement) {
+                    $(labelElement).html(input.files[0].name);
+                }
+            }
 
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-	function displayImg2(input, _this) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				_this.siblings('.custom-file-label').html(input.files[0].name)
-				$('#cimg2').attr('src', e.target.result);
-			}
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-	function displayImg3(input, _this) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				_this.siblings('.custom-file-label').html(input.files[0].name)
-				$('#cimg3').attr('src', e.target.result);
-			}
+    $(document).ready(function () {
 
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-	$(document).ready(function () {
-		$('.summernote').summernote({
-			height: '45vh',
-			toolbar: [
-				['style', ['style']],
-				['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-				['fontname', ['fontname']],
-				['fontsize', ['fontsize']],
-				['color', ['color']],
-				['para', ['ol', 'ul', 'paragraph', 'height']],
-				['table', ['table']],
-				['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
-			]
-		})
-	})
+        $('.summernote').summernote({
+            height: '45vh',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['table', ['table']],
+                ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+		// Handle the update button click
+        $('#system-frm').submit(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Trigger the AJAX request to log activity
+            $.ajax({
+                url: _base_url_ + "classes/Master.php",
+                type: 'POST',
+                data: {
+                    f: 'settings_activity' // Log the update activity
+                },
+                success: function(response) {
+                    console.log('Activity logged successfully.');
+                    // Submit the form if activity is logged successfully
+                    $('#system-frm').off('submit').submit(); 
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error logging activity:', error);
+                }
+            });
+        });
+    });
+	
 </script>

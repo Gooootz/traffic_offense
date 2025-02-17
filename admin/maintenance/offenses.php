@@ -1,6 +1,6 @@
 <?php if ($_settings->chk_flashdata('success')): ?>
 	<script>
-		alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
+		alert_toast("<?php echo $_settings->flashdata('success') ?>", 'success')
 	</script>
 <?php endif; ?>
 <div class="card card-outline card-primary">
@@ -22,28 +22,42 @@
 							<col width="1%">
 							<col width="10%">
 							<col width="25%">
-							<col width="25%">
+							<col width="20%">
+							<col width="30%">
+							<col width="5%">
 							<col width="10%">
-							<col width="10%">
-							<col width="15%">
 						</colgroup>
 					<?php else: ?>
 						<colgroup>
 							<col width="1%">
 							<col width="10%">
 							<col width="25%">
-							<col width="30%">
-							<col width="10%">
+							<col width="20%">
+							<col width="35%">
 							<col width="5%">
 						</colgroup>
 					<?php endif; ?>
 					<thead>
 						<tr>
-							<th>#</th>
+							<th># <table style="width: 100%;">
+									<thead>
+										<th><br></th>
+									</thead>
+								</table>
+							</th>
 							<th>Date Created</th>
 							<th>Name</th>
 							<th>Description</th>
-							<th style="text-align: center;">Rate</th>
+							<th style="text-align: center;">
+								Rate
+								<table style="width: 100%;">
+									<thead>
+										<th>1st</th>
+										<th>2nd</th>
+										<th>3rd</th>
+									</thead>
+								</table>
+							</th>
 							<th style="text-align: center;">Status</th>
 							<?php if ($_settings->userdata('type') == 1): ?>
 								<th style="text-align: center;">Action</th>
@@ -64,7 +78,29 @@
 								<td>
 									<p class="truncate m-0"><?php echo $row['description'] ?></p>
 								</td>
-								<td class="text-center">₱ <?php echo number_format($row['fine'], 2) ?></td>
+
+								<td className="text-center">
+									<table style="width: 100%;">
+										<tbody>
+											<tr>
+												<td style="width: 33.33% ; text-align: center">₱
+													<?php echo number_format($row['fine'], 2) ?>
+												</td>
+												<td style="width: 33.33% ; text-align: center">₱
+													<?php echo number_format($row['fine2'], 2) ?>
+												</td>
+												<td style="width: 33.33% ; text-align: center">₱
+													<?php echo number_format($row['fine3'], 2) ?>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+
+								</td>
+
+
+								</td>
 								<td class="text-center">
 									<?php if ($row['status'] == 1): ?>
 										<span class="badge badge-success">Active</span>
@@ -81,9 +117,10 @@
 												href="?page=maintenance/manage_offense&id=<?php echo $row['id'] ?>">
 												<span class="fa fa-edit"></span>
 											</a>
-											<!-- <a class="btn btn-outline-danger delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">
-										<span class="fa fa-trash"></span>
-									</a> -->
+											<!-- <a class="btn btn-outline-danger delete_data" href="javascript:void(0)"
+												data-id="<?php echo $row['id'] ?>">
+												<span class="fa fa-trash"></span>
+											</a> -->
 
 										</div>
 									</td>
