@@ -5,19 +5,13 @@
 <?php endif;?>
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h1 class="card-title" style="font-size: 24px;">Activity Log</h1><br><br>
-        <h4 class="card-title" style="font-size: 18px;">in progress</h4>
-        <div class="card-tools">
-            <a href="?page=drivers/manage_driver" class="btn btn-flat btn-primary">
-                <span class="fas fa-plus"></span> Create New
-            </a>
-        </div>
+        <h1 class="card-title" style="font-size: 24px;">Activity Logs</h1>
     </div>
 
 	<div class="card-body">
 		<div class="container-fluid">
 			<div class="container-fluid">
-				<table class="table table-hover table-stripped">
+				<table class="table table-hover table-striped">
 					<colgroup>
 						<col width="2%">
 						<col width="10%">
@@ -37,9 +31,8 @@
 					<tbody>
                         <?php 
                         $i = 1;
-                        $qry = $conn->query("SELECT * FROM `activity_log` ORDER BY unix_timestamp(date_created) DESC ");
-                        while ($row = $qry->fetch_assoc()) {
-                            ?>
+                        $qry = $conn->query("SELECT * FROM `activity_log` ORDER BY unix_timestamp(date_created) DESC");
+                        while ($row = $qry->fetch_assoc()): ?>
                             <tr>
                                 <td class="text-center"><?php echo $i++; ?></td>
                                 <td><?php echo htmlspecialchars($row['date_created']); ?></td>
@@ -47,9 +40,8 @@
                                 <td><?php echo htmlspecialchars($row['action']); ?></td>
                                 <td><?php echo htmlspecialchars($row['description']); ?></td>
                             </tr>
-                        <?php } ?>
+                        <?php endwhile; ?>
                     </tbody>
-
 				</table>
 			</div>
 		</div>
@@ -78,14 +70,14 @@
 			dataType:"json",
 			error:err=>{
 				console.log(err)
-				alert_toast("An error occured.",'error');
+				alert_toast("An error occurred.",'error');
 				end_loader();
 			},
 			success:function(resp){
 				if(typeof resp== 'object' && resp.status == 'success'){
 					location.reload();
 				}else{
-					alert_toast("An error occured.",'error');
+					alert_toast("An error occurred.",'error');
 					end_loader();
 				}
 			}

@@ -17,14 +17,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 ?>
 <div class="card card-outline card-info">
     <div class="card-header">
-        <h3 class="card-title"><?php echo isset($id) ? "Update " : "Create New " ?> Offense</h3>
+        <h3 class="card-title"><?php echo isset($id) ? "Update " : "Create a New " ?> Vehicle Type</h3>
     </div>
     <div class="card-body">
         <form action="" id="vehicle-form">
             <input type="hidden" name="id" value="<?php echo isset($id) ? $id : ''; ?>">
             <div class="form-group col-6">
                 <label for="name" class="control-label">Type of Vehicle</label>
-                <input name="name" id="name" type="text" class="form-control form" value="<?php echo isset($name) ? $name : ''; ?>"/>
+                <input name="name" id="name" type="text" class="form-control form" value="<?php echo isset($name) ? $name : ''; ?>"/required>
             </div>
             <div class="form-group col-4">
                 <label for="status" class="control-label">Status</label>

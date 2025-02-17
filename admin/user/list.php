@@ -39,13 +39,14 @@
 						<th>Name</th>
 						<th>Username</th>
 						<th>Type</th>
+						<th>Status</th>
 						<th style="text-align: center;" >Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT *,concat(firstname,' ',lastname) as name from `users` where id != '1' and id != '{$_settings->userdata('id')}' order by concat(firstname,' ',lastname) asc ");
+						$qry = $conn->query("SELECT *,concat(firstname,' ',middleinitial,' ',lastname,', ',suffix) as name from `users` where id != '1' and id != '{$_settings->userdata('id')}' order by concat(firstname,' ',lastname) asc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
@@ -54,7 +55,13 @@
 							<td><?php echo ucwords($row['name']) ?></td>
 							<td ><p class="m-0 truncate-1"><?php echo $row['username'] ?></p></td>
 							<td><?php echo ($row['type'] == 1) ? 'Administrator' : 'Staff' ?></td>
-							
+							<td>
+								<?php if (isset($row['status']) && $row['status'] == 1): ?>
+									<span class="badge badge-success">Active</span>
+								<?php else: ?>
+									<span class="badge badge-secondary">Inactive</span>
+								<?php endif; ?>
+							</td>
 							<td style="text-align: center;" >
 								<div style="display: inline;" align="center" >
 								

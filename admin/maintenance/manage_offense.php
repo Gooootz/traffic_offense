@@ -1,57 +1,65 @@
 <?php
 if (isset($_GET['id']) && $_GET['id'] > 0) {
-	$qry = $conn->query("SELECT * from `offenses` where id = '{$_GET['id']}' ");
-	if ($qry->num_rows > 0) {
-		foreach ($qry->fetch_assoc() as $k => $v) {
-			$$k = $v;
-		}
-	}
+    $id = $conn->real_escape_string($_GET['id']); // Sanitize input
+    $qry = $conn->query("SELECT * FROM `offenses` WHERE id = '$id'");
+    if ($qry->num_rows > 0) {
+        foreach ($qry->fetch_assoc() as $k => $v) {
+            $$k = $v;
+        }
+    }
 }
 ?>
 <div class="card card-outline card-info">
-	<div class="card-header">
-		<h3 class="card-title"><?php echo isset($id) ? "Update " : "Create New " ?> Offense</h3>
-	</div>
-	<div class="card-body">
-		<form action="" id="offense-form">
-			<input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
-			<div class="form-group col-6">
-				<label for="code" class="control-label">Traffic Offense Code</label>
-				<input name="code" id="code" maxlength="20" type="text" class="form-control form"
-					value="<?php echo isset($code) ? $code : ''; ?>" />
-			</div>
-			<div class="form-group col-6">
-				<label for="offensename" class="control-label">Traffic Offense Name</label>
-				<input name="offensename" id="offensename" type="text" class="form-control form"
-					value="<?php echo isset($offensename) ? $offensename : ''; ?>" />
-			</div>
-			<div class="form-group">
-				<label for="description" class="control-label">Description</label>
-				<textarea name="description" id="" cols="30" rows="2"
-					class="form-control form no-resize summernote"><?php echo isset($description) ? $description : ''; ?></textarea>
-			</div>
-			<div class="form-group col-4">
-				<label for="fine" class="control-label">Fine</label>
-				<input name="fine" id="fine" type="number" step="any" class="form-control form text-right"
-					value="<?php echo isset($fine) ? $fine : ''; ?>" />
-			</div>
-			<div class="form-group col-4">
-				<label for="status" class="control-label">Status</label>
-				<select name="status" id="status" class="custom-select select">
-					<option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Active</option>
-					<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
-				</select>
-			</div>
+    <div class="card-header">
+        <h3 class="card-title"><?php echo isset($id) ? "Update " : "Create New " ?> Offense</h3>
+    </div>
+    <div class="card-body">
+        <form action="" id="offense-form" method="POST">
+            <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+            <div class="form-group col-6">
+                <label for="code" class="control-label">Traffic Offense Code</label>
+                <input name="code" id="code" maxlength="20" type="text" class="form-control form"
+                    value="<?php echo isset($code) ? $code : ''; ?>" / required>
+            </div>
+            <div class="form-group col-6">
+                <label for="offensename" class="control-label">Traffic Offense Name</label>
+                <input name="offensename" id="offensename" type="text" class="form-control form"
+                    value="<?php echo isset($offensename) ? $offensename : ''; ?>" / required>
+            </div>
+            <div class="form-group">
+                <label for="description" class="control-label">Description</label>
+                <textarea name="description" id="description" cols="30" rows="2"
+                    class="form-control form no-resize summernote"><?php echo isset($description) ? $description : ''; ?></textarea>
+            </div>
+            <div class="form-group col-4">
+                <label for="fine" class="control-label">Fine (1st Offense)</label>
+                <input name="fine" id="fine" type="number" step="any" class="form-control form text-right"
+                    value="<?php echo isset($fine) ? $fine : ''; ?>" / required>
 
-		</form>
-	</div>
-	<div class="card-footer">
-		<button class="btn btn-flat btn-primary" form="offense-form">Save</button>
-		<a class="btn btn-flat btn-default" href="?page=maintenance/offenses">Cancel</a>
-	</div>
+                <label for="fine2" class="control-label">Fine (2nd Offense)</label>
+                <input name="fine2" id="fine2" type="number" step="any" class="form-control form text-right"
+                    value="<?php echo isset($fine2) ? $fine2 : ''; ?>" / required> 
+
+                <label for="fine3" class="control-label">Fine (3rd Offense)</label>
+                <input name="fine3" id="fine3" type="number" step="any" class="form-control form text-right"
+                    value="<?php echo isset($fine3) ? $fine3 : ''; ?>" / required>
+            </div>
+            <div class="form-group col-4">
+                <label for="status" class="control-label">Status</label>
+                <select name="status" id="status" class="custom-select select">
+                    <option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Active</option>
+                    <option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-flat btn-primary" form="offense-form">Save</button>
+        <a class="btn btn-flat btn-default" href="?page=maintenance/offenses">Cancel</a>
+    </div>
 </div>
 <script>
-	$(document).ready(function () {
+    $(document).ready(function () {
 		$('#offense-form').submit(function (e) {
 			e.preventDefault();
 			var _this = $(this)
